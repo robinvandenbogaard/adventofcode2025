@@ -1,6 +1,8 @@
 package nl.roka.adventofcode.aoc.input;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Grid {
   private final String[] grid;
@@ -105,5 +107,15 @@ public class Grid {
 
   public boolean inBounds(Point point) {
     return inBounds(point.x(), point.y());
+  }
+
+  public Stream<Point> points() {
+    var result = new ArrayList<Point>();
+    for (var column = 0; column < width(); column++) {
+      for (var row = 0; row < height(); row++) {
+        result.add(Point.of(row, column));
+      }
+    }
+    return result.stream();
   }
 }

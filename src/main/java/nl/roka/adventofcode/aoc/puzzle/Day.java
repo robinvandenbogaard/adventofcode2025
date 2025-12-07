@@ -57,9 +57,9 @@ public class Day implements Iterable<String> {
     return Grid.of(reader);
   }
 
-  public Grid fullGrid(String symbol) {
+  public Grid fullGrid(String borderSymbol) {
     reader.reset();
-    return Grid.withBorder(reader, symbol);
+    return Grid.withBorder(reader, borderSymbol);
   }
 
   public <R> Stream<R> map(Function<Line, ? extends R> mapper) {
