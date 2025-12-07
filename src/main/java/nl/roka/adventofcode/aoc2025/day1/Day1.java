@@ -26,8 +26,9 @@ public class Day1 extends AbstractDayPuzzle {
   @Override
   public Answer runSilver() {
     var lock = new Lock(50);
-    for (var line : day) {
-      lock = lock.dial(line);
+    var lines = day.stream().toList();
+    for (var line : lines) {
+      lock = lock.dial(line.text());
     }
     return Answer.of(lock.dialStoppedOnZeroCount());
   }
@@ -38,7 +39,6 @@ public class Day1 extends AbstractDayPuzzle {
     var lines = day.stream().toList();
     for (var line : lines) {
       lock = lock.dial(line.text());
-      System.out.println(line.text() + " leads to " + lock);
     }
     return Answer.of(lock.dialPassedZeroCount());
   }

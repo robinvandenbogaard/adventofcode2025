@@ -2,7 +2,7 @@ package nl.roka.adventofcode.aoc2025.day2;
 
 import java.math.BigInteger;
 
-public record Id(String value) {
+record Id(String value) {
 
   public static Id of(BigInteger value) {
     return new Id(value.toString());

@@ -11,7 +11,7 @@ class IdTest {
 
   @ParameterizedTest
   @CsvSource({"1,2,3", "10,234,244"})
-  void sum(BigInteger a, BigInteger b, BigInteger expected) {
+  void sum(Id a, Id b, Id expected) {
     assertThat(a.add(b)).isEqualTo(expected);
   }
 

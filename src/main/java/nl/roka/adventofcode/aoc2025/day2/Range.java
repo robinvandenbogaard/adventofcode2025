@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-public class Range {
+class Range {
   private final BigInteger min;
   private final BigInteger max;
 
