@@ -19,6 +19,10 @@ public final class Line {
     return new Line(null);
   }
 
+  public boolean isBlank() {
+    return text == null || text.isBlank();
+  }
+
   public List<Integer> toIntegers(String delimiter) {
     return Arrays.stream(text.split(delimiter)).map(Integer::valueOf).toList();
   }
@@ -53,5 +57,9 @@ public final class Line {
 
   public boolean contains(String text) {
     return text().contains(text);
+  }
+
+  public boolean isNotBlank() {
+    return !isBlank();
   }
 }
