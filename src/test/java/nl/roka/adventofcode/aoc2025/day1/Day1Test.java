@@ -10,11 +10,11 @@ class Day1Test {
 
   @Test
   void silverExample() {
-    assertThat(new Day1().runSilver()).isEqualTo(Answer.TBD);
+    assertThat(new Day1().runSilver()).isEqualTo(Answer.of(3));
   }
 
   @Test
   void goldExample() {
-    assertThat(new Day1(LineReader.of("/day1-gold.in")).runGold()).isEqualTo(Answer.TBD);
+    assertThat(new Day1(LineReader.of("/day1-gold.in")).runGold()).isEqualTo(Answer.of(6));
   }
 }

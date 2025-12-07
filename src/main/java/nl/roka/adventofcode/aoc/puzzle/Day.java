@@ -1,6 +1,8 @@
 package nl.roka.adventofcode.aoc.puzzle;
 
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -8,7 +10,7 @@ import nl.roka.adventofcode.aoc.input.Grid;
 import nl.roka.adventofcode.aoc.input.Line;
 import nl.roka.adventofcode.aoc.input.LineReader;
 
-public class Day {
+public class Day implements Iterable<String> {
   private final LineReader reader;
   private final int number;
 
@@ -29,6 +31,16 @@ public class Day {
       action.accept(line.text());
       line = reader.nextLine();
     }
+  }
+
+  @Override
+  public Iterator<String> iterator() {
+    return reader.stream().map(Line::text).iterator();
+  }
+
+  @Override
+  public Spliterator<String> spliterator() {
+    return reader.stream().map(Line::text).spliterator();
   }
 
   public Stream<Line> stream() {

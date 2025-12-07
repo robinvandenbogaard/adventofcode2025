@@ -9,9 +9,9 @@ import nl.roka.adventofcode.aoc.runner.Runner;
 
 public class Day1 extends AbstractDayPuzzle {
 
-  public static final Solutions SOLUTIONS = Solutions.none();
+  public static final Solutions SOLUTIONS = Solutions.of(1118, 6289);
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     Runner.run(new Day1());
   }
 
@@ -25,11 +25,21 @@ public class Day1 extends AbstractDayPuzzle {
 
   @Override
   public Answer runSilver() {
-      return Answer.TBD;
+    var lock = new Lock(50);
+    for (var line : day) {
+      lock = lock.dial(line);
+    }
+    return Answer.of(lock.dialStoppedOnZeroCount());
   }
 
   @Override
   public Answer runGold() {
-    return Answer.TBD;
+    var lock = new Lock(50);
+    var lines = day.stream().toList();
+    for (var line : lines) {
+      lock = lock.dial(line.text());
+      System.out.println(line.text() + " leads to " + lock);
+    }
+    return Answer.of(lock.dialPassedZeroCount());
   }
 }
