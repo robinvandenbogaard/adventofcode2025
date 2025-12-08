@@ -2,7 +2,6 @@ package nl.roka.adventofcode.aoc.input;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -67,6 +66,14 @@ public class Grid {
     return grid[row];
   }
 
+  public String column(int column) {
+    var b = new StringBuilder();
+    for (var row = 0; row < grid.length; row++) {
+      b.append(row(row).charAt(column));
+    }
+    return b.toString();
+  }
+
   public String get(Point point) {
     return get(point.x(), point.y());
   }
@@ -84,10 +91,6 @@ public class Grid {
     String text = grid[point.x()];
     int index = point.y();
     grid[point.x()] = text.substring(0, index) + symbol + text.substring(index + 1);
-  }
-
-  public List<String> columnAsList(int i) {
-    return null;
   }
 
   public char getChar(Point point) {

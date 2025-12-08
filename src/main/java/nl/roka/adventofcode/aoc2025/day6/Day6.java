@@ -10,7 +10,7 @@ import nl.roka.adventofcode.aoc.runner.Runner;
 
 public class Day6 extends AbstractDayPuzzle {
 
-  public static final Solutions SOLUTIONS = Solutions.of("6725216329103");
+  public static final Solutions SOLUTIONS = Solutions.of("6725216329103", "10600728112865");
 
   static void main(String[] args) {
     Runner.run(new Day6());
@@ -28,13 +28,17 @@ public class Day6 extends AbstractDayPuzzle {
   public Answer runSilver() {
     var grid = day.fullGrid();
     return Answer.of(
-        ProblemProvider.of(grid).stream()
+        ProblemProvider.ofRows(grid).stream()
             .map(MathProblem::total)
             .reduce(BigInteger.ZERO, BigInteger::add));
   }
 
   @Override
   public Answer runGold() {
-    return Answer.TBD;
+    var grid = day.fullGrid();
+    return Answer.of(
+        ProblemProvider.ofColumns(grid).stream()
+            .map(MathProblem::total)
+            .reduce(BigInteger.ZERO, BigInteger::add));
   }
 }

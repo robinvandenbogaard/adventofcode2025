@@ -16,10 +16,27 @@ record MathProblem(MathType type, List<BigInteger> numbers) {
     return new MathProblem(MathType.MULTIPLY, getValues(numbers));
   }
 
+  public static MathProblem additionCol(Grid numbers) {
+    return new MathProblem(MathType.ADD, getValuesCol(numbers));
+  }
+
+  public static MathProblem multiplicationCol(Grid numbers) {
+    return new MathProblem(MathType.MULTIPLY, getValuesCol(numbers));
+  }
+
   private static ArrayList<BigInteger> getValues(Grid numbers) {
     var values = new ArrayList<BigInteger>();
     for (var row = 0; row < numbers.height(); row++) {
       values.add(new BigInteger(numbers.row(row).trim()));
+    }
+    return values;
+  }
+
+  private static ArrayList<BigInteger> getValuesCol(Grid numbers) {
+    var values = new ArrayList<BigInteger>();
+    for (var column = numbers.width() - 1; column >= 0; column--) {
+      var trimmed = numbers.column(column).trim();
+      if (!trimmed.isBlank()) values.add(new BigInteger(trimmed));
     }
     return values;
   }

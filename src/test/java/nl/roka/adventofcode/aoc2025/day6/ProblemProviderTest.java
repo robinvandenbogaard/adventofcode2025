@@ -1,7 +1,6 @@
 package nl.roka.adventofcode.aoc2025.day6;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,8 +11,8 @@ import org.junit.jupiter.api.Test;
 class ProblemProviderTest {
 
   @Test
-  void findsProblems() {
-    var finder = ProblemProvider.of(Grid.of(LineReader.of("/day6.in")));
+  void findsRowProblems() {
+    var finder = ProblemProvider.ofRows(Grid.of(LineReader.of("/day6.in")));
     assertThat(finder.problems())
         .containsExactlyInAnyOrder(
             new MathProblem(
@@ -28,5 +27,24 @@ class ProblemProviderTest {
             new MathProblem(
                 MathType.ADD,
                 List.of(BigInteger.valueOf(64), BigInteger.valueOf(23), BigInteger.valueOf(314))));
+  }
+
+  @Test
+  void findsColProblems() {
+    var finder = ProblemProvider.ofColumns(Grid.of(LineReader.of("/day6.in")));
+    assertThat(finder.problems())
+        .containsExactlyInAnyOrder(
+            new MathProblem(
+                MathType.ADD,
+                List.of(BigInteger.valueOf(4), BigInteger.valueOf(431), BigInteger.valueOf(623))),
+            new MathProblem(
+                MathType.MULTIPLY,
+                List.of(BigInteger.valueOf(175), BigInteger.valueOf(581), BigInteger.valueOf(32))),
+            new MathProblem(
+                MathType.ADD,
+                List.of(BigInteger.valueOf(8), BigInteger.valueOf(248), BigInteger.valueOf(369))),
+            new MathProblem(
+                MathType.MULTIPLY,
+                List.of(BigInteger.valueOf(356), BigInteger.valueOf(24), BigInteger.valueOf(1))));
   }
 }
