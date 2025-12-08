@@ -57,4 +57,15 @@ class GridTest {
 
     assertThat(grid.get(Point.of(2, 0))).isEqualTo("*");
   }
+
+  @Test
+  void subGrid() {
+    Grid grid = Grid.of(LineReader.of(AOC_INPUT_GRID_TEST_TXT));
+    assertThat(grid.subGrid(0, 0, 2, 2)).isEqualTo(grid);
+    assertThat(grid.subGrid(0, 0, 1, 1)).isEqualTo(new Grid(new String[] {"12", "ab"}));
+    assertThat(grid.subGrid(1, 0, 2, 1)).isEqualTo(new Grid(new String[] {"23", "bc"}));
+    assertThat(grid.subGrid(0, 1, 1, 2)).isEqualTo(new Grid(new String[] {"ab", "@#"}));
+    assertThat(grid.subGrid(1, 1, 2, 2)).isEqualTo(new Grid(new String[] {"bc", "#$"}));
+    assertThat(grid.subGrid(1, 0, 2, 2)).isEqualTo(new Grid(new String[] {"23", "bc", "#$"}));
+  }
 }

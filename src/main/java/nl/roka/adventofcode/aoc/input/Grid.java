@@ -1,7 +1,9 @@
 package nl.roka.adventofcode.aoc.input;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class Grid {
@@ -117,5 +119,30 @@ public class Grid {
       }
     }
     return result.stream();
+  }
+
+  public Grid subGrid(int x1, int y1, int x2, int y2) {
+    var rows = new String[y2 - y1 + 1];
+    for (var i = y1; i <= y2; i++) {
+      rows[i - y1] = row(i).substring(x1, x2 + 1);
+    }
+    return new Grid(rows);
+  }
+
+  @Override
+  public String toString() {
+    return "Grid{" + "grid=" + Arrays.toString(grid) + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Grid grid1 = (Grid) o;
+    return Objects.deepEquals(grid, grid1.grid);
+  }
+
+  @Override
+  public int hashCode() {
+    return Arrays.hashCode(grid);
   }
 }
