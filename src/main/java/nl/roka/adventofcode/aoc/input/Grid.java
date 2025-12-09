@@ -46,7 +46,7 @@ public class Grid {
   }
 
   public String get(int row, int column) {
-    if (!inBounds(row, column)) return null;
+    if (!inBounds(row, column)) return "";
     return String.valueOf(grid[row].toCharArray()[column]);
   }
 
