@@ -3,12 +3,12 @@ package nl.roka.adventofcode.aoc2025.day5;
 import java.util.ArrayList;
 import java.util.List;
 
-record RangeMerger(List<Range> ranges) {
-  public List<Range> merged() {
+record RangeMerger(List<IdRange> ranges) {
+  public List<IdRange> merged() {
     if (ranges.size() <= 1) {
       return ranges;
     }
-    var result = new ArrayList<Range>();
+    var result = new ArrayList<IdRange>();
     var sorted = ranges.stream().sorted().toList();
     var previous = sorted.getFirst();
     for (int i = 1; i < sorted.size(); i++) {

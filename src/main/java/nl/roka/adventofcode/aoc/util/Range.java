@@ -1,12 +1,10 @@
-package nl.roka.adventofcode.aoc2025.day5;
+package nl.roka.adventofcode.aoc.util;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.stream.Stream;
 
-record Range(BigInteger min, BigInteger max) implements Comparable<Range> {
-  Range(BigInteger min, BigInteger max) {
+public record Range(BigInteger min, BigInteger max) implements Comparable<Range> {
+  public Range(BigInteger min, BigInteger max) {
     this.min = min;
     this.max = max;
     if (min.compareTo(max) > 0) {
@@ -28,20 +26,21 @@ record Range(BigInteger min, BigInteger max) implements Comparable<Range> {
     return max.subtract(min).add(BigInteger.ONE);
   }
 
-  public Stream<Id> ids() {
-    var ids = new ArrayList<Id>();
-    for (BigInteger i = min; i.compareTo(max) <= 0; i = i.add(BigInteger.ONE)) {
-      ids.add(Id.of(i));
-    }
-    return ids.stream();
-  }
-
-  public boolean inRange(Id id) {
-    return id.gte(min) && id.lte(max);
+  /** Inclusive check if the value is in the range. */
+  public boolean inRange(BigInteger value) {
+    return gte(value, min) && lte(value, max);
   }
 
   public boolean overLaps(Range other) {
-    return inRange(Id.of(other.min)) || inRange(Id.of(other.max));
+    return inRange(other.min) || inRange(other.max);
+  }
+
+  private boolean gte(BigInteger value, BigInteger other) {
+    return value.compareTo(other) >= 0;
+  }
+
+  public boolean lte(BigInteger value, BigInteger other) {
+    return value.compareTo(other) <= 0;
   }
 
   public Range merge(Range other) {

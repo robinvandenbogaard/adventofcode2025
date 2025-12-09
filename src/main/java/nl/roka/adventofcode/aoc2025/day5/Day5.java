@@ -28,13 +28,13 @@ public class Day5 extends AbstractDayPuzzle {
 
   @Override
   public Answer runSilver() {
-    var ranges = new ArrayList<Range>();
+    var ranges = new ArrayList<IdRange>();
     var ids = new ArrayList<Id>();
     day.stream()
         .filter(Line::isNotBlank)
         .forEach(
             line -> {
-              if (line.contains("-")) ranges.add(Range.of(line.text()));
+              if (line.contains("-")) ranges.add(IdRange.of(line.text()));
               else ids.add(Id.of(line.text()));
             });
 
@@ -46,11 +46,11 @@ public class Day5 extends AbstractDayPuzzle {
   @Override
   public Answer runGold() {
     var ranges =
-        day.stream().filter(line -> line.contains("-")).map(Line::text).map(Range::of).toList();
+        day.stream().filter(line -> line.contains("-")).map(Line::text).map(IdRange::of).toList();
 
     var withoutOverlap = new RangeMerger(ranges).merged();
 
     return Answer.of(
-        withoutOverlap.stream().map(Range::length).reduce(BigInteger.ZERO, BigInteger::add));
+        withoutOverlap.stream().map(IdRange::length).reduce(BigInteger.ZERO, BigInteger::add));
   }
 }

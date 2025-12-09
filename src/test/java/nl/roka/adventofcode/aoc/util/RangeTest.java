@@ -1,4 +1,4 @@
-package nl.roka.adventofcode.aoc2025.day5;
+package nl.roka.adventofcode.aoc.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,86 +14,80 @@ class RangeTest {
 
   @Test
   void validRange() {
-    var range = IdRange.of("1698522-1698528");
+    var range = Range.of("1698522-1698528");
     assertThat(range.length()).isEqualTo(new BigInteger("7"));
   }
 
   @Test
   void minMustBeSmallerThanMax() {
-    assertThrows(IllegalArgumentException.class, () -> IdRange.of("1698528-1698522"));
+    assertThrows(IllegalArgumentException.class, () -> Range.of("1698528-1698522"));
   }
 
   @Test
   void cannotStartInputWithZero() {
-    assertThrows(IllegalArgumentException.class, () -> IdRange.of("0-10"));
-  }
-
-  @Test
-  void iteratorContainsAllIdsInclusively() {
-    var range = IdRange.of("22-24");
-    assertThat(range.ids()).containsExactly(Id.of(22), Id.of(23), Id.of(24));
+    assertThrows(IllegalArgumentException.class, () -> Range.of("0-10"));
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"10", "11", "12"})
-  void inRange(Id id) {
-    var range = IdRange.of("10-12");
-    assertThat(range.inRange(id)).isTrue();
+  void inRange(BigInteger value) {
+    var range = Range.of("10-12");
+    assertThat(range.inRange(value)).isTrue();
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"9", "13"})
-  void notInRange(Id id) {
-    var range = IdRange.of("10-12");
-    assertThat(range.inRange(id)).isFalse();
+  void notInRange(BigInteger value) {
+    var range = Range.of("10-12");
+    assertThat(range.inRange(value)).isFalse();
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"9-10", "12-13", "10-12"})
-  void overLaps(IdRange other) {
-    var range = IdRange.of("10-12");
+  void overLaps(Range other) {
+    var range = Range.of("10-12");
     assertThat(range.overLaps(other)).isTrue();
     assertThat(other.overLaps(range)).isTrue();
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"8-9", "13-14"})
-  void noOverLaps(IdRange other) {
-    var range = IdRange.of("10-12");
+  void noOverLaps(Range other) {
+    var range = Range.of("10-12");
     assertThat(range.overLaps(other)).isFalse();
     assertThat(other.overLaps(range)).isFalse();
   }
 
   @ParameterizedTest
   @CsvSource({"9-10,9-12", "12-13,10-13", "10-12,10-12"})
-  void merges(IdRange other, IdRange expected) {
-    var range = IdRange.of("10-12");
+  void merges(Range other, Range expected) {
+    var range = Range.of("10-12");
     assertThat(range.merge(other)).isEqualTo(expected);
     assertThat(other.merge(range)).isEqualTo(expected);
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"8-9", "13-14"})
-  void merges(IdRange other) {
-    var range = IdRange.of("10-12");
+  void merges(Range other) {
+    var range = Range.of("10-12");
     assertThatThrownBy(() -> range.merge(other)).isInstanceOf(IllegalArgumentException.class);
   }
 
   @ParameterizedTest
   @CsvSource({"10-10,10-10", "10-11,10-11", "11-12,11-12"})
-  void comparingEqual(IdRange a, IdRange b) {
+  void comparingEqual(Range a, Range b) {
     assertThat(a.compareTo(b)).isEqualTo(0);
   }
 
   @ParameterizedTest
   @CsvSource({"9-10,10-10", "10-10,10-11", "8-40,11-12"})
-  void comparingLess(IdRange a, IdRange b) {
+  void comparingLess(Range a, Range b) {
     assertThat(a.compareTo(b)).isEqualTo(-1);
   }
 
   @ParameterizedTest
   @CsvSource({"10-10,9-10", "10-11,10-10", "11-12,8-40"})
-  void comparingGreater(IdRange a, IdRange b) {
+  void comparingGreater(Range a, Range b) {
     assertThat(a.compareTo(b)).isEqualTo(1);
   }
 }
