@@ -14,7 +14,7 @@ public class Day5 extends AbstractDayPuzzle {
 
   public static final Solutions SOLUTIONS = Solutions.of("756", "355555479253787");
 
-  static void main(String[] args) {
+  void main() {
     Runner.run(new Day5());
   }
 

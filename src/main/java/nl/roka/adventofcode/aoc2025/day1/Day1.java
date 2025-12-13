@@ -11,7 +11,7 @@ public class Day1 extends AbstractDayPuzzle {
 
   public static final Solutions SOLUTIONS = Solutions.of(1118, 6289);
 
-  static void main(String[] args) {
+  void main() {
     Runner.run(new Day1());
   }
 
