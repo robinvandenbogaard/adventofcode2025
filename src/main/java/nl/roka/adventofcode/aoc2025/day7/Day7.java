@@ -1,6 +1,8 @@
 package nl.roka.adventofcode.aoc2025.day7;
 
+import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import nl.roka.adventofcode.aoc.input.LineReader;
 import nl.roka.adventofcode.aoc.puzzle.AbstractDayPuzzle;
@@ -11,9 +13,9 @@ import nl.roka.adventofcode.aoc.runner.Runner;
 
 public class Day7 extends AbstractDayPuzzle {
 
-  public static final Solutions SOLUTIONS = Solutions.of("1560");
+  public static final Solutions SOLUTIONS = Solutions.of("1560", "25592971184998");
 
-  static void main(String[] args) {
+  void main() {
     Runner.run(new Day7());
   }
 
@@ -29,7 +31,7 @@ public class Day7 extends AbstractDayPuzzle {
   public Answer runSilver() {
     var grid = day.fullGrid();
     var startPoint = grid.findSymbol("S");
-    var beams = new LinkedList<Beam>();
+    var beams = new ArrayList<Beam>();
     beams.add(new Beam(grid, startPoint));
     var totalSplits = 0L;
     while (!beams.isEmpty()) {
@@ -47,6 +49,25 @@ public class Day7 extends AbstractDayPuzzle {
 
   @Override
   public Answer runGold() {
-    return Answer.of(0);
+    var grid = day.fullGrid();
+    var startPoint = grid.findSymbol("S");
+    var beams = new ArrayList<Beam>();
+    beams.add(new Beam(grid, startPoint));
+    var numberOfBeams = BigInteger.ZERO;
+    while (!beams.isEmpty()) {
+      var newBeams = beams.stream().map(Beam::moveDownWithWeight).flatMap(Set::stream).toList();
+      var finished = beams.stream().filter(Beam::destroyed).toList();
+      beams.addAll(newBeams);
+      beams =
+          new ArrayList<>(
+              beams.stream()
+                  .collect(Collectors.toMap(Beam::position, Function.identity(), Beam::merge))
+                  .values());
+      beams.removeAll(finished);
+
+      numberOfBeams = finished.stream().map(Beam::weight).reduce(BigInteger.ZERO, BigInteger::add);
+    }
+
+    return Answer.of(numberOfBeams);
   }
 }

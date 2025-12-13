@@ -1,5 +1,6 @@
 package nl.roka.adventofcode.aoc2025.day7;
 
+import java.math.BigInteger;
 import java.util.Objects;
 import java.util.Set;
 import nl.roka.adventofcode.aoc.input.Grid;
@@ -10,10 +11,16 @@ public class Beam {
   private Point position;
   private boolean split = false;
   private boolean destroyed = false;
+  private BigInteger weight = BigInteger.ONE;
 
   public Beam(Grid grid, Point startPoint) {
     this.grid = grid;
     this.position = startPoint;
+  }
+
+  public Beam(Grid grid, Point position, BigInteger weight) {
+    this(grid, position);
+    this.weight = weight;
   }
 
   public Set<Beam> moveDown() {
@@ -32,6 +39,18 @@ public class Beam {
     return Set.of();
   }
 
+  public Set<Beam> moveDownWithWeight() {
+    position = position.south();
+    if (!grid.inBounds(position)) {
+      destroyed = true;
+    } else if (grid.get(position).equals("^")) {
+      split = true;
+      position = position.east();
+      return Set.of(new Beam(grid, position.west().west(), weight));
+    }
+    return Set.of();
+  }
+
   public boolean split() {
     return split;
   }
@@ -42,7 +61,19 @@ public class Beam {
 
   @Override
   public String toString() {
-    return "Beam[" + "position=" + position + ']';
+    return "Beam[" + "position=" + position + ", weight=" + weight + ']';
+  }
+
+  public Point position() {
+    return position;
+  }
+
+  public Beam merge(Beam beam) {
+    return new Beam(grid, beam.position, weight.add(beam.weight));
+  }
+
+  public BigInteger weight() {
+    return weight;
   }
 
   @Override

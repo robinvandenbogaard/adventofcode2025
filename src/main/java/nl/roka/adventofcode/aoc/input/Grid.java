@@ -102,11 +102,8 @@ public class Grid {
   }
 
   public void print() {
-    for (var x = 0; x < width(); x++) {
-      for (var y = 0; y < height(); y++) {
-        System.out.print(get(x, y));
-      }
-      System.out.println();
+    for (var row : grid) {
+      IO.println(row);
     }
   }
 
