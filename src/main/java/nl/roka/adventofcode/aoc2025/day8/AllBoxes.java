@@ -23,4 +23,8 @@ public class AllBoxes {
 
     return pairs.stream().sorted().toList();
   }
+
+  public long count() {
+    return boxes.size();
+  }
 }

@@ -1,5 +1,6 @@
 package nl.roka.adventofcode.aoc2025.day8;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,5 +31,12 @@ public class Circuits {
 
   public List<Circuit> circuits() {
     return new ArrayList<>(circuits);
+  }
+
+  public long boxCount() {
+    return circuits.stream()
+        .map(Circuit::size)
+        .reduce(BigInteger.ZERO, BigInteger::add)
+        .longValue();
   }
 }

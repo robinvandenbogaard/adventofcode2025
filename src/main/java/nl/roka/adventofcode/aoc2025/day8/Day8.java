@@ -1,17 +1,19 @@
 package nl.roka.adventofcode.aoc2025.day8;
 
 import java.math.BigInteger;
-
+import java.util.List;
 import nl.roka.adventofcode.aoc.input.LineReader;
 import nl.roka.adventofcode.aoc.puzzle.AbstractDayPuzzle;
 import nl.roka.adventofcode.aoc.puzzle.Answer;
 import nl.roka.adventofcode.aoc.puzzle.Day;
 import nl.roka.adventofcode.aoc.puzzle.Solutions;
+import nl.roka.adventofcode.aoc.runner.RequireOptimization;
 import nl.roka.adventofcode.aoc.runner.Runner;
 
+@RequireOptimization
 public class Day8 extends AbstractDayPuzzle {
 
-  public static final Solutions SOLUTIONS = Solutions.of(131150);
+  public static final Solutions SOLUTIONS = Solutions.of(131150, 2497445);
   private final int maxConnections;
 
   void main() {
@@ -49,6 +51,16 @@ public class Day8 extends AbstractDayPuzzle {
 
   @Override
   public Answer runGold() {
-    return Answer.TBD;
+    var boxes = new AllBoxes(day.stream().map(FusionBox::of).toList());
+    var circuits = new Circuits();
+    List<FusionBoxPair> sortByDistance = boxes.sortByDistance();
+    for (FusionBoxPair pair : sortByDistance) {
+      circuits.add(pair);
+      if (circuits.circuits().size() == 1 && circuits.boxCount() == boxes.count()) {
+        return Answer.of(pair.multiplyX());
+      }
+    }
+
+    throw new IllegalStateException("Never merged back to one");
   }
 }

@@ -14,6 +14,6 @@ class Day8Test {
 
   @Test
   void goldExample() {
-    assertThat(new Day8(10).runGold()).isEqualTo(Answer.TBD);
+    assertThat(new Day8(10).runGold()).isEqualTo(Answer.of(216 * 117));
   }
 }
